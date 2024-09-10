@@ -228,20 +228,7 @@ function fetchHistoryCompleted(data) {
       <el-table-column prop="time" label="日期" />
     </el-table>
   </el-card>
-  
-  <!-- <div>
-    <h1>比赛区</h1>
-    <div v-if="formDiabled">{{form.name}}加入了{{form.team === 'left' ? '左队' : '右队'}}</div>
-    <div>
-      <el-button type="success" @click="onStartGame" :disabled="!allowGameStart">开始比赛</el-button>
-    </div>
-  </div>
-  <el-divider />
 
-  <main>
-    
-    
-  </main> -->
 </template>
 
 <style scoped>

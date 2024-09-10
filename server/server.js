@@ -10,7 +10,6 @@ let leftScore = 0;
 let rightScore = 0;
 const POWER_ADD_SCORE = 50
 const WIN_SCORE = 1000
-let timerId = null;
 
 
 wss.on('connection', function connection(ws) {
@@ -60,6 +59,7 @@ function joinTeamHandler(ws, data) {
     }
     sendToAllMembers(createPayload('join-team-completed'))
 }
+// 处理人员离开情况
 function memberLeaveHandler(ws, data) {
     const { name, team } = data;
     if (name === '' && team === '') {
@@ -77,6 +77,7 @@ function memberLeaveHandler(ws, data) {
     }
     sendToAllMembers(createPayload('member-leave-completed'))
 }
+// 开始游戏
 function startGameHandler(ws, data) {
     isGameStarting = true
     leftScore = 0;
@@ -84,6 +85,7 @@ function startGameHandler(ws, data) {
     sendToAllMembers(createPayload('start-game-completed'))
 }
 
+// 为队伍加力
 function addPowerHandler(ws, data) {
     const { name, team } = data;
     const members = team === 'left' ? leftScore : rightTeamMembers;
@@ -103,7 +105,7 @@ function addPowerHandler(ws, data) {
 
     sendToAllMembers(createPayload('add-power-completed'))
 }
-
+// 获取历史记录
 function fetchHistoryHandler(ws, data) {
     const { name, team } = data;
     const datas = records.filter(item => item.team === team && item.members.includes(name))
@@ -129,6 +131,7 @@ function createPayload(type, team = '') {
     return JSON.stringify(payload)
 }
 
+//创建结束消息体
 function createGameOverPayload(type, team = '') {
     const record = {
         members: team === 'left' ? leftTeamMembers : rightTeamMembers,
